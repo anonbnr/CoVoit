@@ -1,0 +1,67 @@
+ENTITIES:
+=========
+Admin(username, password)
+
+Membre(email, password, nom, prenom, dateNaissance, numRue, nomRue, ville, codePostal, numTel, reputation)
+  email : clé primaire
+  prenom :
+  nom : non nul
+  dateNaissance : non nul
+  numTel : non nul
+  reputation : calculé à partir des avis qu'il reçoit (reputation = \sum_{a \in T} a/N) où N = nombre de trajets
+
+	Véhicule(idVoiture, marque, modele, couleur)
+  numVoiture : clé primaire
+  marque : non nul
+  couleur :
+
+TrajetType(villeDepart, villeArrivee, distance, tempsMoyen, plafondPrix)
+  villeDepart : non nul
+  villeArrivee : non nul
+  distance : non nul
+  tempsMoyen : non nul
+  plafondPrix : non nul (centimes/km)
+
+Trajet(villeDepart, adresseRDV, villeArrivee, adresseDepose, date, typeVoiture, nombrePlaces, prix, tailleBagage)
+  villeDepart : non nul
+	adresseRDV : non nul
+  villeArrivee : non nul
+	adresseDepose : non nul
+	date : non nul
+  typeVoiture : non nul
+	nombrePlaces : non nul
+	prix : si Trajet correspond à une instance de TrajetType alors prix < TrajetType.prixPlafond
+	tailleBagage : valeurs d'une énumération (petite, moyenne, grande)
+  remarque : un conducteur dépose et prend des passagers depuis une seule adresse (adresseRDV, adresseDepose)
+
+Avis(nbEtoiles, commentaire)
+  nbEtoiles : non nul
+  commentaire : maximum 200 caractères (peut être nul)
+
+RELATIONSHIPS:
+==============
+Admin :
+=======
+creeTrajet : Admin 0,N 1,1 TrajetType
+	attributs : dateCreation : non nul
+fermeCompte : Admin 0,N 0,N Membre
+  attributs : dateFermeture, typeFermeture, duree :
+    - typeFermeture = 0 -> non banis (temporaire) et duree = valeur.
+    - typeFermeture = 1 -> banis et duree = null.
+
+Membre :
+========
+possedeVehicule : Membre 0,N 1,1 Membre
+proposeTrajet : Membre 0,N 1,1 Trajet
+inscritTrajet : Membre 0,N 0,N Trajet (N de Trajet = nbPlaces)
+  attributs : dateInscription (non nul et < date(Trajet))
+donneAvis : Membre 0,N 1,1 Avis
+
+TrajetType :
+============
+correspond : TrajetType 0,N 0,1 Trajet
+
+Avis :
+======
+cibleMembre : Avis 1,1 0,N Membre
+concerneTrajet : Avis 1,1 0,N Trajet

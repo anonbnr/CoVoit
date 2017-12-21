@@ -1,0 +1,35 @@
+Livrables:
+==========
+1. Rapport (par groupe) 1-2 pages contenant :
+  - num, noms et prénoms des participants.
+  - bibliothèques et frameworks utilisés.
+  - concepts de génie logiciel employés (design patterns, MVC, ORM, ...)
+  - fonctionnalités implémentées du cahier des charges.
+  - éventuellement les fonctionnalités supplémentaires.
+  - problèmes rencontrés.
+  - conclusion.
+
+2. mail (par groupe, avant lundi 18/12/2017) à Pompidor et Meynard contenant : (check)
+  - la liste des étudiants du binôme
+  - groupe TD
+  - titre de l'appli (éventuellement une URL : GitHub ou GitLab)
+
+3. Démo le 21/12/2017 entre 8h et 12h dans salle de TP 6.16
+
+
+ToDoList:
+=========
+1. Finish cours of BDD
+2. Finish modélisation of BDD (EA et relationnel)
+3. Finish cours of Web (Meynard et Pompi)
+4. Finish création du web :
+  HTML/CSS/Bootstrap ?
+  JS/PHP/JQuery ?
+
+
+Schedule:
+=========
+1. 20:30 -> 21:30 DF (check)
+2. 21:40 -> 22:40 DF (check)
+3. 22:50 -> 23:50 DF (check)
+4. 00:00 -> 1:00 DF / Triggers (check)
