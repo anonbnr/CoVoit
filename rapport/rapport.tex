@@ -52,14 +52,16 @@
 \addcontentsline{toc}{section}{\nameref{sec:modele_relationnel}}
 
 \begin{mld}
-  \textbf{Administrateur} & (\prim{username}, \attr{password})\\
-  \textbf{Ferme\_compte} & (\foreign{\prim{username}}, \foreign{\prim{email}})\\
-  \textbf{Membre} & (\prim{email}, \attr{password}, \attr{nom}, \attr{prenom}, \attr{dateNaissance}, \attr{numRue}, \attr{nomRue}, \attr{ville}, \attr{codePostal}, \attr{numTel}, \attr{reputation})\\
-  \textbf{Vehicule} & (\prim{idVehi}, \attr{marque}, \attr{modele}, \attr{couleur}, \foreign{email})\\
-  \textbf{Inscription} & (\foreign{\prim{email}}, \foreign{\prim{idTraj}})\\
-  \textbf{Avis} & (\prim{idAvis}, \attr{nbEtoiles}, \attr{commentaire}, \foreign{idTraj}, \foreign{email}, \foreign{email.1})\\
-  \textbf{Trajet\_type} & (\prim{idTrajType}, \attr{villeDepart}, \attr{villeArrivee}, \attr{distance}, \attr{tempsMoyen}, \attr{plafondPrix}, \foreign{username})\\
-  \textbf{Trajet} & (\prim{idTraj}, \attr{villeDepart}, \attr{villeArrivee}, \attr{adresseRDV}, \attr{adresseDepose}, \attr{date}, \attr{typeVoiture}, \attr{nombrePlaces}, \attr{prix}, \attr{tailleBagage}, \foreign{email}, \foreign{idTrajType})\\
+  \textbf{Administrateur} & (\prim{idAdmin}, \attr{username}, \attr{password})\\
+  \textbf{Ferme\_Compte} & (\foreign{\prim{idAdmin}}, \foreign{\prim{idMembre}}, \attr{typeFermeture}, \attr{dureeFermeture})\\
+  \textbf{Membre} & (\prim{idAdmin}, \attr{email}, \attr{password}, \attr{nom}, \attr{prenom}, \attr{dateNaissance}, \attr{numTel}, \attr{reputation}, \foreign{idAdr})\\
+  \textbf{Adresse} & (\prim{idAdr}, \attr{numRue}, \attr{nomRue}, \attr{ville})\\
+  \textbf{Vehicule} & (\prim{idVehi}, \attr{marque}, \attr{modele}, \attr{couleur}, \foreign{idProprio})\\
+  \textbf{Inscription} & (\foreign{\prim{idPassager}}, \foreign{\prim{idTraj}})\\
+  \textbf{Avis} & (\prim{idAvis}, \attr{nbEtoiles}, \attr{commentaire}, \foreign{idTraj}, \foreign{idDonneur}, \foreign{idCible})\\
+  \textbf{Trajet\_Type} & (\prim{idTrajType}, \attr{villeDepart}, \attr{villeArrivee}, \attr{distance}, \attr{tempsMoyen}, \attr{plafondPrix}, \foreign{idAdmin})\\
+  \textbf{Trajet} & (\prim{idTraj}, \attr{villeDepart}, \attr{villeArrivee}, \attr{date}, \foreign{idVehiUtilise}, \attr{nbPlaces}, \attr{prix}, \attr{tailleBagages}, \foreign{idConducteur}, \foreign{idTrajType})\\
+  \textbf{Passe\_par} & (\foreign{\prim{idTraj}}, \foreign{\prim{idAdr}})\\
 \end{mld}
 
 \section*{Contraintes de Modélisation}
