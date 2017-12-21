@@ -1,5 +1,5 @@
 ## Admin: 
--  créer des trajets 
+-  créer des trajets types: ville départ , ville d'arrivée, temps moyen.
 -  de fermer temporairement ou définitivement un compte membre. et d'etre averti automatiquement quand un membre a un avis trop faible.
 -  *plus: acceèder aux statisqtiques*
 
@@ -12,5 +12,5 @@ Le trajet disparait une fois sa date dépassée. Et une fois ce dernier terminé
 - de s'inscrire (et se d'esincrire) à un trajet  et apres le trajet il doit pouvoir donner un avis sur le conducteur.
 
 
-## Invité
+## Invité   
 - il doit pouvoir accèder aux trajets entre deux villes à une date donnée sans pouvoir accèder aux info du conducteur. 
