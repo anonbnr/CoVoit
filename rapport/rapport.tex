@@ -53,14 +53,14 @@
 
 \begin{mld}
   \textbf{Administrateur} & (\prim{idAdmin}, \attr{username}, \attr{password})\\
-  \textbf{Ferme\_Compte} & (\foreign{\prim{idAdmin}}, \foreign{\prim{idMembre}}, \attr{typeFermeture}, \attr{dureeFermeture})\\
-  \textbf{Membre} & (\prim{idAdmin}, \attr{email}, \attr{password}, \attr{nom}, \attr{prenom}, \attr{dateNaissance}, \attr{numTel}, \attr{reputation}, \foreign{idAdr})\\
   \textbf{Adresse} & (\prim{idAdr}, \attr{numRue}, \attr{nomRue}, \attr{ville})\\
+  \textbf{Membre} & (\prim{idMembre}, \attr{email}, \attr{password}, \attr{nom}, \attr{prenom}, \attr{dateNaissance}, \attr{numTel}, \attr{reputation}, \foreign{idAdr})\\
   \textbf{Vehicule} & (\prim{idVehi}, \attr{marque}, \attr{modele}, \attr{couleur}, \foreign{idProprio})\\
+  \textbf{Ferme\_Compte} & (\foreign{\prim{idAdmin}}, \foreign{\prim{idMembre}}, \attr{typeFermeture}, \attr{dureeFermeture})\\
+  \textbf{Trajet\_Type} & (\prim{idTrajType}, \attr{villeDepart}, \attr{villeArrivee}, \attr{distance}, \attr{tempsMoyen}, \attr{plafondPrix}, \foreign{idAdmin})\\
+  \textbf{Trajet} & (\prim{idTraj}, \attr{villeDepart}, \attr{villeArrivee}, \attr{dateTrajet}, \foreign{idVehiUtilise}, \attr{nbPlaces}, \attr{prix}, \attr{tailleBagages}, \foreign{idConducteur}, \foreign{idTrajType})\\
   \textbf{Inscription} & (\foreign{\prim{idPassager}}, \foreign{\prim{idTraj}})\\
   \textbf{Avis} & (\prim{idAvis}, \attr{nbEtoiles}, \attr{commentaire}, \foreign{idTraj}, \foreign{idDonneur}, \foreign{idCible})\\
-  \textbf{Trajet\_Type} & (\prim{idTrajType}, \attr{villeDepart}, \attr{villeArrivee}, \attr{distance}, \attr{tempsMoyen}, \attr{plafondPrix}, \foreign{idAdmin})\\
-  \textbf{Trajet} & (\prim{idTraj}, \attr{villeDepart}, \attr{villeArrivee}, \attr{date}, \foreign{idVehiUtilise}, \attr{nbPlaces}, \attr{prix}, \attr{tailleBagages}, \foreign{idConducteur}, \foreign{idTrajType})\\
   \textbf{Passe\_par} & (\foreign{\prim{idTraj}}, \foreign{\prim{idAdr}})\\
 \end{mld}
 

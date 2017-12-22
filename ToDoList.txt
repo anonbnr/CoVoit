@@ -8,25 +8,25 @@ Livrables:
 
 ToDoList:
 =========
-1. ON DELETE CASCADE | SET NULL discussion and updating of collaboration file. (check)
-2. update ER model. (check) (retouche)
-3. update relational model. (check)
-4. update report. (check)
-5. commit/push unto git.
-6. create indexes.
-7. creation of the database on the web-server and debugging.
-8. implementation of triggers and debugging.
-9. inserting values into database and debugging.
-10. defining of testing queries' specifications.
-11. creation of testing query list.
-12. querying the database and debugging.
-13. creating the database creation, manipulation, and queries files.
-14. commit/push unto git.
-15. update report.
-16. commit/push unto git.
-17. put the file on Moodle.
+1. implementation of triggers and debugging.
+2. inserting values into database and debugging.
+3. defining of testing queries' specifications.
+4. creation of testing query list.
+5. querying the database and debugging.
+6. creating the database creation, manipulation, and queries files.
+7. commit/push unto git.
+8. update report.
+9. commit/push unto git.
+10. put the file on Moodle.
 
 Schedule:
 =========
-1. indexes
-2.
+
+
+Remarques:
+==========
+1. modify EA model :
+  - date in Trajet -> dateTrajet
+2. modify relational model :
+3. update report :
+  - add new EA model
