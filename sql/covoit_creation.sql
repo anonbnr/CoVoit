@@ -1,8 +1,8 @@
 CREATE DATABASE IF NOT EXISTS COVOITURAGE DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE COVOITURAGE;
 
-CREATE TABLE IF NOT EXISTS Administrateur (
-  idAdmin INT,
+CREATE TABLE Administrateur (
+  idAdmin INT AUTO_INCREMENT,
   username VARCHAR(20) NOT NULL,
   password VARCHAR(20) NOT NULL,
   /*CONSTRAINTS*/
@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS Administrateur (
     UNIQUE(username)
 );
 
-CREATE TABLE IF NOT EXISTS  Adresse (
-	idAdr INT,
+CREATE TABLE Adresse (
+	idAdr INT AUTO_INCREMENT,
   numRue NUMERIC(4),
   nomRue VARCHAR(42),
   ville VARCHAR(42) NOT NULL,
@@ -24,15 +24,15 @@ CREATE TABLE IF NOT EXISTS  Adresse (
   	UNIQUE(numRue, nomRue, ville)
 );
 
-CREATE TABLE IF NOT EXISTS Membre (
-  idMembre INT,
-  email VARCHAR(100) NOT NULL, /*TRIGGER LIKE %@%*/
+CREATE TABLE Membre (
+  idMembre INT AUTO_INCREMENT,
+  email VARCHAR(100) NOT NULL,
   password VARCHAR(42) NOT NULL,
   nom VARCHAR(42) NOT NULL,
   prenom VARCHAR(42) NOT NULL,
   dateNaissance DATE NOT NULL,
   numTel CHAR(10) NOT NULL,
-  reputation NUMERIC(1), /* reputation = somme(avis)/nombre de trajets*/
+  reputation NUMERIC(1,1), /* reputation = somme(avis)/nombre de trajets*/
   idAdr INT,
   /*CONSTRAINTS*/
   CONSTRAINT PK_MEMBRE
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS Membre (
   	UNIQUE(email)
 );
 
-CREATE TABLE IF NOT EXISTS Vehicule (
-  idVehi INT,
+CREATE TABLE Vehicule (
+  idVehi INT AUTO_INCREMENT,
   marque VARCHAR(20) NOT NULL,
   modele VARCHAR(20) NOT NULL,
   couleur VARCHAR(20) NOT NULL,
@@ -56,24 +56,23 @@ CREATE TABLE IF NOT EXISTS Vehicule (
   	FOREIGN KEY(idProprio) REFERENCES Membre(idMembre) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Ferme_Compte (
-  idFermeture INT;
+CREATE TABLE Ferme_Compte (
+  idFermeture INT AUTO_INCREMENT,
   idAdmin INT,
   idMembre INT NOT NULL,
   typeFermeture BOOLEAN, /*0 if temporary 1 if permanent*/
   dureeFermeture NUMERIC(3), /*NUMERIC if temporary NULL if permanent*/
   /*CONSTRAINTS*/
   CONSTRAINT PK_FERME_COMPTE
-    PRIMARY KEY(idAdmin, idMembre),
-  /*Trigger, set the idAmin in this table to a special value "NOT_AVAILABLE" ON DELETE*/
-  -- CONSTRAINT FK_FERME_COMPTE_ADMIN
-  --   FOREIGN KEY(idAdmin) REFERENCES Administrateur(idAdmin) ON DELETE SET NULL,
+    PRIMARY KEY(idFermeture),
+  CONSTRAINT FK_FERME_COMPTE_ADMINISTRATEUR
+    FOREIGN KEY(idAdmin) REFERENCES Administrateur(idAdmin) ON DELETE SET NULL,
   CONSTRAINT FK_FERME_COMPTE_MEMBRE
     FOREIGN KEY(idMembre) REFERENCES Membre(idMembre) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Trajet_Type (
-  idTrajType INT,
+CREATE TABLE Trajet_Type (
+  idTrajType INT AUTO_INCREMENT,
   villeDepart VARCHAR(42) NOT NULL,
   villeArrivee VARCHAR(42) NOT NULL,
   distance NUMERIC(4,2) NOT NULL, /*> 0*/
@@ -88,8 +87,8 @@ CREATE TABLE IF NOT EXISTS Trajet_Type (
   	UNIQUE(villeDepart, villeArrivee)
 );
 
-CREATE TABLE IF NOT EXISTS Trajet (
-  idTraj INT,
+CREATE TABLE Trajet (
+  idTraj INT AUTO_INCREMENT,
   villeDepart VARCHAR(42) NOT NULL,
   villeArrivee VARCHAR(42) NOT NULL,
   dateTrajet TIMESTAMP NOT NULL, /*TRIGGER to make sure that the timestamp is superior to current time else reject to insert int table*/
@@ -122,8 +121,8 @@ CREATE TABLE IF NOT EXISTS Inscription ( /*TRIGGER sur nbPlaces*/
   	FOREIGN KEY(idTraj) REFERENCES Trajet(idTraj) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Avis (
-  idAvis INT,
+CREATE TABLE Avis (
+  idAvis INT AUTO_INCREMENT,
   nbEtoiles NUMERIC(1) NOT NULL, /*0 <= nbEtoiles <= 5*/
   commentaire VARCHAR(120),
   idTraj INT,
