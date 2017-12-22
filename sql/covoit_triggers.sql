@@ -47,7 +47,6 @@ BEGIN
   END IF;
 END;
 //
-
 /*TRAJET*/
 /*======*/
 CREATE OR REPLACE TRIGGER verifyDateTrajet
@@ -57,6 +56,41 @@ BEGIN
   IF NEW.dateTrajet < CURRENT_TIMESTAMP THEN
     SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30006, MESSAGE_TEXT = 'Date du trajet invalide !';
   END IF;
+END;
+//
+
+CREATE OR REPLACE TRIGGER checkAvis
+BEFORE INSERT OR UPDATE ON Avis
+FOR EACH ROW
+BEGIN
+  IF NEW.nbEtoiles >5 OR NEW.nbEtoiles<0 THEN
+    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30020, MESSAGE_TEXT = 'Le nombre detoiles doit etre entre 0 et 5!';
+  END IF;
+  
+END;
+//
+
+CREATE OR REPLACE TRIGGER checkIdDonneur
+BEFORE INSERT OR UPDATE ON Avis
+FOR EACH ROW
+BEGIN
+  
+  IF NEW.idDonneur=NEW.idCible THEN
+    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30021, MESSAGE_TEXT = 'La cible et le donneur doivent etre differents';
+  END IF;
+
+  IF (NEW.idDonneur  IN  SELECT idPassager FROM Inscription WHERE idTraj=NEW.idTraj) THEN
+    IF  (NEW.idCible <> SELECT idConducteur FROM Trajet WHERE idTraj=NEW.idTraj) THEN 
+          SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30022, MESSAGE_TEXT = 'Si la donneur est un passager alors cible doit etre son conducteur';
+
+  ELSE IF (NEW.idDonneur = SELECT idConducteur FROM Trajet WHERE idTraj=NEW.idTraj) THEN
+    IF (NEW.idCible NOT IN  SELECT idPassager FROM Inscription WHERE idTraj=NEW.idTraj) THEN
+      SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30022, MESSAGE_TEXT = 'Si la donneur est un conducteur alors cible doit etre un de ses passagers';
+
+  ELSE
+      SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30022, MESSAGE_TEXT = 'Le donneur doit etre ou bien le conducteur ou un passager du trajet ';
+
+
 END;
 //
 
