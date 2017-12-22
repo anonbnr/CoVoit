@@ -49,12 +49,24 @@ END;
 //
 /*TRAJET*/
 /*======*/
-CREATE OR REPLACE TRIGGER verifyDateTrajet
+CREATE OR REPLACE TRIGGER verifyTrajet
 BEFORE INSERT /*OR UPDATE*/ ON Trajet
 FOR EACH ROW
 BEGIN
   IF NEW.dateTrajet < CURRENT_TIMESTAMP THEN
     SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30006, MESSAGE_TEXT = 'Date du trajet invalide !';
+  END IF;
+  IF NEW.nbPlaces <=0 OR NEW.nbPlaces >=5 THEN
+    SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30007, MESSAGE_TEXT = 'Nombre de places invalide !';
+  END IF;
+  IF NEW.idTrajType IS NOT NULL THEN
+    IF prix > (
+      SELECT plafondPrix
+      FROM Trajet_Type
+      WHERE NEW.idTrajType = Trajet_Type.idTrajType
+    ) THEN
+      SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 30008, MESSAGE_TEXT = 'Le plafond du prix du trajet non respecté !';
+    END IF;
   END IF;
 END;
 //
@@ -98,10 +110,6 @@ DELIMITER ;
 
 /*TRAJET*/
 /*======*/
-/*nbPlaces NUMERIC(1) NOT NULL,
-  TRIGGER to make sure that 0 < nbPlaces < 5*/
-/*prix NUMERIC(4,2) NOT NULL,
-  TRIGGER to make sur that if idTrajType is not null, prix <= plafond*/
 /*idConducteur INT NOT NULL,
   TRIGGER verify if conductor is not banished*/
 /*idTrajType INT,
@@ -121,7 +129,6 @@ DELIMITER ;
   TRIGGER /*0 <= nbEtoiles <= 5*/
 /*idDonneur INT,
   different from idCible*/
-
 
 -- CREATE OR REPLACE TRIGGER calculReputation
 -- AFTER INSERT ON Avis FOR EACH ROW
