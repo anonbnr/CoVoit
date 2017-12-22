@@ -1,25 +1,29 @@
-Administrateur:username, password
+Administrateur: idAdmin,username, password
 Ferme_compte, 0N Administrateur, 0N Membre
 :
-Membre:email, password, nom, prenom, dateNaissance, numRue, nomRue, ville, codePostal, numTel, reputation
+Membre:idMembre,email, password, nom, prenom, dateNaissance, numTel, reputation
 Possede, 0N Membre, 11 Vehicule
 Vehicule: idVehi,marque, modele, couleur
 
 Donne, 0N Membre, 11 Avis
 Cible, 11 Avis, 0N Membre
 :
+:
 
 Cree_traj_type, 0N Administrateur,11 Trajet_type 
 :
 :
-:
+Adresse:idAdr, numRue,nomRue,ville
 Propose, 0N Membre, 11 Trajet
 :
 Inscription, 0N Membre, 0N Trajet
 
 Avis:idAvis,nbEtoiles, commentaire
 Concerne, 11 Avis, 0N Trajet
+:
+:
 
+:
 
 Trajet_type: idTrajType, villeDepart, villeArrivee, distance, tempsMoyen, plafondPrix
 :
