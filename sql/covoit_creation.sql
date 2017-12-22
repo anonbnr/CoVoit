@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS COVOITURAGE DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE COVOITURAGE;
 
-CREATE TABLE Administrateur (
+CREATE TABLE IF NOT EXISTS Administrateur (
   idAdmin INT AUTO_INCREMENT,
   username VARCHAR(20) NOT NULL,
   password VARCHAR(20) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE Administrateur (
     UNIQUE(username)
 );
 
-CREATE TABLE Adresse (
+CREATE TABLE IF NOT EXISTS Adresse (
 	idAdr INT AUTO_INCREMENT,
   numRue NUMERIC(4),
   nomRue VARCHAR(42),
@@ -24,7 +24,7 @@ CREATE TABLE Adresse (
   	UNIQUE(numRue, nomRue, ville)
 );
 
-CREATE TABLE Membre (
+CREATE TABLE IF NOT EXISTS Membre (
   idMembre INT AUTO_INCREMENT,
   email VARCHAR(100) NOT NULL,
   password VARCHAR(42) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Membre (
   	UNIQUE(email)
 );
 
-CREATE TABLE Vehicule (
+CREATE TABLE IF NOT EXISTS Vehicule (
   idVehi INT AUTO_INCREMENT,
   marque VARCHAR(20) NOT NULL,
   modele VARCHAR(20) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE Vehicule (
   	FOREIGN KEY(idProprio) REFERENCES Membre(idMembre) ON DELETE CASCADE
 );
 
-CREATE TABLE Ferme_Compte (
+CREATE TABLE IF NOT EXISTS Ferme_Compte (
   idFermeture INT AUTO_INCREMENT,
   idAdmin INT,
   idMembre INT NOT NULL,
@@ -71,12 +71,12 @@ CREATE TABLE Ferme_Compte (
     FOREIGN KEY(idMembre) REFERENCES Membre(idMembre) ON DELETE CASCADE
 );
 
-CREATE TABLE Trajet_Type (
+CREATE TABLE IF NOT EXISTS Trajet_Type (
   idTrajType INT AUTO_INCREMENT,
   villeDepart VARCHAR(42) NOT NULL,
   villeArrivee VARCHAR(42) NOT NULL,
   distance NUMERIC(4,2) NOT NULL, /*> 0*/
-  tempsMoyen NUMERIC(4)NOT NULL, /*> 0*/
+  tempsMoyen NUMERIC(4) NOT NULL, /*> 0*/
   plafondPrix NUMERIC(4,2) NOT NULL, /*> 0*/
   idAdmin INT,
   CONSTRAINT PK_TRAJET_TYPE
@@ -87,7 +87,7 @@ CREATE TABLE Trajet_Type (
   	UNIQUE(villeDepart, villeArrivee)
 );
 
-CREATE TABLE Trajet (
+CREATE TABLE IF NOT EXISTS Trajet (
   idTraj INT AUTO_INCREMENT,
   villeDepart VARCHAR(42) NOT NULL,
   villeArrivee VARCHAR(42) NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS Inscription ( /*TRIGGER sur nbPlaces*/
   	FOREIGN KEY(idTraj) REFERENCES Trajet(idTraj) ON DELETE CASCADE
 );
 
-CREATE TABLE Avis (
+CREATE TABLE IF NOT EXISTS Avis (
   idAvis INT AUTO_INCREMENT,
   nbEtoiles NUMERIC(1) NOT NULL, /*0 <= nbEtoiles <= 5*/
   commentaire VARCHAR(120),
